@@ -12,7 +12,7 @@ import java.lang.*;
  * @author BLSoft
  */
 public class Painel extends JFrame{
-    private JPanel jpnPID, jpnPENAME, jpnPAVIALIABLE, jpnPrice, jpnProductRa;
+    private JPanel jpnPID, jpnPENAME, jpnPAVIALIABLE, jpnPrice, jpnProductRa, Display;
     private JLabel jlbPID, jlbPENAME, jlbPAVIALIABLE, jlbPrice, jlbProductRa;
     private JTextField jtfPID, jtfPENAME, jtfPAVIALIABLE, jtfPrice, jtfProductRa;
 
@@ -21,6 +21,7 @@ public class Painel extends JFrame{
     double[] priceMain;
     float[] ratingMain;
     int size = 10;
+    ArrayList<Product>arraylist = new ArrayList<>();
     
     class Product {
         int pid;   
@@ -48,77 +49,71 @@ public class Painel extends JFrame{
         this.add(this.jpnPrice);
         this.add(this.jpnProductRa);
         
-        
-        
         //Painel LISTA = new Painel();
         //LISTA.addElements(pid , pname, pavi, price, rating);
     }
-    private void addElements (int pid[],String pname[], int pavailability[], double pprice[],float prating[]){
-        ArrayList<Product>arraylist = new ArrayList<>();
-        for (int i = 0; i<size; i++){
-            arraylist.add(new Product (pid[i],pname[i],pavailability[i],pprice[i],prating[i]));
-        }
+    private void addElements (int pid,String pname, int pavailability, double pprice,float prating){
         
     }
     private void configurarPainelCliente(){
-        this.jpnPID = new JPanel(new FlowLayout());
-        this.jpnPID.setPreferredSize(new Dimension(250, 50));
+        this.jpnPID = new JPanel();
+        this.jpnPID.setBounds(0,50,150,200);
         
-        this.jpnPENAME = new JPanel(new FlowLayout());
-        this.jpnPENAME.setPreferredSize(new Dimension(250, 50));
+        this.jpnPENAME = new JPanel();
+        this.jpnPENAME.setBounds(200,50,150,25);
         
-        this.jpnPAVIALIABLE = new JPanel(new FlowLayout());
-        this.jpnPAVIALIABLE.setPreferredSize(new Dimension(250, 50));
+        this.jpnPAVIALIABLE = new JPanel();
+        this.jpnPAVIALIABLE.setBounds(400,50,150,25);
         
-        this.jpnPrice = new JPanel(new FlowLayout());
-        this.jpnPrice.setPreferredSize(new Dimension(250, 50));
+        this.jpnPrice = new JPanel();
+        this.jpnPrice.setBounds(600,50,150,25);
         
-        this.jpnProductRa = new JPanel(new FlowLayout());
-        this.jpnProductRa.setPreferredSize(new Dimension(250, 50));
+        this.jpnProductRa = new JPanel();
+        this.jpnProductRa.setBounds(800,50,150,25);
         
         
         this.configurarDadosCliente();
        
         this.jpnPID.add(this.jlbPID);
-        this.jpnPID.add(this.jtfPID);
+        this.add(this.jtfPID);
         
         this.jpnPENAME.add(this.jlbPENAME);
-        this.jpnPENAME.add(this.jtfPENAME);
+        this.add(this.jtfPENAME);
         
         this.jpnPAVIALIABLE.add(this.jlbPAVIALIABLE);
-        this.jpnPAVIALIABLE.add(this.jtfPAVIALIABLE);
+        this.add(this.jtfPAVIALIABLE);
         
         this.jpnPrice.add(this.jlbPrice);
-        this.jpnPrice.add(this.jtfPrice);
+        this.add(this.jtfPrice);
         
         this.jpnProductRa.add(this.jlbProductRa);
-        this.jpnProductRa.add(this.jtfProductRa);
+        this.add(this.jtfProductRa);
         
         
     }
     private void configurarDadosCliente(){
-        this.jlbPID = new JLabel("Nome cliente");
+        this.jlbPID = new JLabel("PID");
         this.jtfPID = new JTextField();
-        this.jtfPID.setPreferredSize(new Dimension(300,25));
+        this.jtfPID.setBounds(15,100,150,25);
         
-        this.jlbPENAME = new JLabel("Nome cliente");
+        this.jlbPENAME = new JLabel("Nome Produto");
         this.jtfPENAME = new JTextField();
-        this.jtfPENAME.setPreferredSize(new Dimension(300,25));
+        this.jtfPENAME.setBounds(215,100,150,25);
         
-        this.jlbPAVIALIABLE = new JLabel("Nome cliente");
+        this.jlbPAVIALIABLE = new JLabel("Quantidade Produto");
         this.jtfPAVIALIABLE = new JTextField();
-        this.jtfPAVIALIABLE.setPreferredSize(new Dimension(300,25));
+        this.jtfPAVIALIABLE.setBounds(415,100,150,25);
         
-        this.jlbPrice = new JLabel("Nome cliente");
+        this.jlbPrice = new JLabel("Preco Produto");
         this.jtfPrice = new JTextField();
-        this.jtfPrice.setPreferredSize(new Dimension(300,25));
+        this.jtfPrice.setBounds(615,100,150,25);
         
-        this.jlbProductRa = new JLabel("Nome cliente");
+        this.jlbProductRa = new JLabel("Produto Avaliacao");
         this.jtfProductRa = new JTextField();
-        this.jtfProductRa.setPreferredSize(new Dimension(300,25));
+        this.jtfProductRa.setBounds(815,100,150,25);
         
         //int pid = Integer.parseInt(jtfPID.getText());
-        //String pname = jtfPENAME.getText();
+        //String pname = ;
         //int pavi = Integer.parseInt(jtfPAVIALIABLE.getText());
         //double price = Double.parseDouble(jtfPrice.getText());
         //float rating = Float.parseFloat(jtfProductRa.getText());
@@ -127,21 +122,38 @@ public class Painel extends JFrame{
     }
     private void configurarFrame(){
         this.setTitle("JAnela com paineis");
-        this.setSize(1000,1000);
-        this.setLayout(new FlowLayout());
+        this.setSize(1050,700);
+        this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         JButton Enter = new JButton("Adicionar");
-        Enter.setPreferredSize(new Dimension(300,25));
-        Enter.setLayout(new FlowLayout());
-        Enter.setLocation(100, 900);
+        
+        Enter.setBounds(50,600,100,50);
         Enter.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                
+                Adicionar_ButtonActionPerformed(e);
             }
         });
-        add(Enter);
+        this.add(Enter);
+    }
+    private void Adicionar_ButtonActionPerformed (java.awt.event.ActionEvent e){
+        arraylist.add(new Product(Integer.parseInt(jtfPID.getText()),jtfPENAME.getText(),Integer.parseInt(jtfPAVIALIABLE.getText()),Double.parseDouble(jtfPrice.getText()),Float.parseFloat(jtfProductRa.getText())));
+        Tabela(arraylist);
+        
+    }
+    
+    public void Tabela(ArrayList<Product> arraylist){
+        this.Display = new JPanel();
+        this.Display.setBounds(400,300,600,300);
+        
+        String[] header = {"Product ID", "Product Name","Product Quantidade", "Product Price", "Product Rating"};
+        String[][] value = new String[arraylist.size()/header.length][header.length];
+        
+        JTable table = new JTable(value, header);
+        this.Display.add(new JScrollPane(table));
+        this.add(this.Display);
+        SwingUtilities.updateComponentTreeUI(this);
     }
     public void displayElements(ArrayList<Product> arraylist){   
         System.out.println("Product ID" + "   Product Name" + "     Product Availability" + "    Product Price" + "   Product Rating");   
