@@ -31,7 +31,7 @@ public class MENU extends javax.swing.JFrame {
     public MENU() {
         initComponents();
     }
-
+    private static final long serialVersionUID = 1113799434508676095L;
    
 
     /**
