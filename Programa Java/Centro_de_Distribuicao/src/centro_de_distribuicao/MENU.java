@@ -22,7 +22,7 @@ import javax.swing.JOptionPane;
  * @author Admin
  */
 public class MENU extends javax.swing.JFrame implements Serializable  {
-
+    //private static final long serialVersionUID = 1651650312478484925;
     
     int ln;
     String Username,Password,Email;
@@ -32,7 +32,7 @@ public class MENU extends javax.swing.JFrame implements Serializable  {
     public MENU() {
         initComponents();
     }
-    private static final long serialVersionUID = 1113799434508676095L;
+    
    
 
     /**
@@ -44,13 +44,7 @@ public class MENU extends javax.swing.JFrame implements Serializable  {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        try {
-            Login_Button =(javax.swing.JButton)java.beans.Beans.instantiate(getClass().getClassLoader(), "centro_de_distribuicao.LOGIN_Login_Button");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (java.io.IOException e) {
-            e.printStackTrace();
-        }
+        Login_Button = new javax.swing.JButton("Login");
         Clear_Button = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         Username_Label = new javax.swing.JLabel();
@@ -103,7 +97,7 @@ public class MENU extends javax.swing.JFrame implements Serializable  {
                         .addGap(69, 69, 69)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(Login_Button, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(Login_Button)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(Clear_Button))
                             .addGroup(layout.createSequentialGroup()
@@ -137,6 +131,7 @@ public class MENU extends javax.swing.JFrame implements Serializable  {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void Login_ButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Login_ButtonActionPerformed
@@ -156,11 +151,8 @@ tfpswd.setText("");
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
             public void run() {
-                
                new MENU().setVisible(true);
                 
             }

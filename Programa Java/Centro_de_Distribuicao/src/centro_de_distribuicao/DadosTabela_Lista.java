@@ -5,24 +5,29 @@
  */
 package centro_de_distribuicao;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author desen
  */
 public class DadosTabela_Lista {
        public int pid;   
-        public String pname;   
-        public int pavailability;   
-        public float pprice;   
-        public float prating;  
-        public DadosTabela_Lista (int pid, String pname, int pavailability, float pprice, float prating){   
+       public String pname,dataEntrada;   
+       public int pavailability;
+       private Date data;
+       SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
+        public DadosTabela_Lista (int pid, String pname, int pavailability, String Data) throws ParseException{   
             //initializing the variables from main   
             //function to the global variable of the class   
             this.pid = pid;   
             this.pname = pname;   
             this.pavailability = pavailability;   
-            this.pprice = pprice;   
-            this.prating = prating; 
+            
+            this.data = formato.parse(Data);
+            
         }
 
     public int getPid() {
@@ -49,20 +54,13 @@ public class DadosTabela_Lista {
         this.pavailability = pavailability;
     }
 
-    public double getPprice() {
-        return pprice;
+    public Date getData() {
+        return data;
     }
 
-    public void setPprice(float pprice) {
-        this.pprice = pprice;
+    public void setData(Date data) {
+        this.data = data;
     }
-
-    public float getPrating() {
-        return prating;
-    }
-
-    public void setPrating(float prating) {
-        this.prating = prating;
-    }
+    
     
 }
