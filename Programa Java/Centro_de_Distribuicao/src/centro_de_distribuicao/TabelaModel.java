@@ -6,6 +6,7 @@
 package centro_de_distribuicao ;
 
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -13,9 +14,9 @@ import javax.swing.table.AbstractTableModel;
  * @author desen
  */
 public class TabelaModel extends AbstractTableModel {
-    private String[] colunas = {"PID", "Nome Produto", "Quantidade Produto", "Preco Produto","Produto Avaliacao"};
+    private String[] colunas = {"PID", "Nome Produto", "Quantidade Produto","Data de Entrega"};
     private ArrayList<DadosTabela_Lista> produtos;
-    private final int COLUNA_PID=0,COLUNA_Nome=1,COLUNA_Quantidade=2,COLUNA_Preco=3,COLUNA_Avaliacao=4;
+    private final int COLUNA_PID=0,COLUNA_Nome=1,COLUNA_Quantidade=2, COLUNA_Data=3;
     
     public TabelaModel(ArrayList<DadosTabela_Lista> produtos){
         this.produtos = produtos;
@@ -48,10 +49,8 @@ public class TabelaModel extends AbstractTableModel {
                 return String.class;
             case COLUNA_Quantidade:
                 return Integer.class;
-            case COLUNA_Preco:
-                return Float.class;
-            case COLUNA_Avaliacao:
-                return Float.class;
+            case COLUNA_Data:
+                return String.class;
             default:
                 return String.class;
         }
@@ -67,10 +66,9 @@ public class TabelaModel extends AbstractTableModel {
                 return produtoA.getPname();
             case COLUNA_Quantidade:
                 return produtoA.getPavailability();
-            case COLUNA_Preco:
-                return produtoA.getPprice();
-            case COLUNA_Avaliacao:
-                return produtoA.getPrating();
+            case COLUNA_Data:
+                return produtoA.getData();
+                
         }
         return null;
     }
@@ -87,11 +85,9 @@ public class TabelaModel extends AbstractTableModel {
             case COLUNA_Quantidade:
                 produtoA.setPavailability((int) aValue);
                 break;
-            case COLUNA_Preco:
-                produtoA.setPprice((float) aValue);
+            case COLUNA_Data:
+                produtoA.setData((Date) aValue);
                 break;
-            case COLUNA_Avaliacao:
-                produtoA.setPrating((float) aValue);
         }
         //este método é que notifica a tabela que houve alteração de dados
         fireTableDataChanged();

@@ -6,6 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.util.*;
 import java.lang.*;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -21,7 +24,7 @@ public class Painel extends JFrame{
 
     int pidMain, pavailability;
     String pnameMain;
-    Float priceMain;
+    String priceMain;
     float ratingMain;
     int size = 10;
     ArrayList<DadosTabela_Lista>arraylist = new ArrayList<>();
@@ -34,7 +37,6 @@ public class Painel extends JFrame{
         this.add(this.jpnPENAME);
         this.add(this.jpnPAVIALIABLE);
         this.add(this.jpnPrice);
-        this.add(this.jpnProductRa);
         
         //Painel LISTA = new Painel();
         //LISTA.addElements(pid , pname, pavi, price, rating);
@@ -72,11 +74,6 @@ public class Painel extends JFrame{
         
         this.jpnPrice.add(this.jlbPrice);
         this.add(this.jtfPrice);
-        
-        this.jpnProductRa.add(this.jlbProductRa);
-        this.add(this.jtfProductRa);
-        
-        
     }
     private void configurarDadosCliente(){
         this.jlbPID = new JLabel("PID");
@@ -91,21 +88,18 @@ public class Painel extends JFrame{
         this.jtfPAVIALIABLE = new JTextField();
         this.jtfPAVIALIABLE.setBounds(415,100,150,25);
         
-        this.jlbPrice = new JLabel("Preco Produto");
+        this.jlbPrice = new JLabel("Data");
         this.jtfPrice = new JTextField();
         this.jtfPrice.setBounds(615,100,150,25);
         
-        this.jlbProductRa = new JLabel("Produto Avaliacao");
-        this.jtfProductRa = new JTextField();
-        this.jtfProductRa.setBounds(815,100,150,25);
+       
         
     }
     private void Dados(){
         pidMain = Integer.parseInt(jtfPID.getText());
         pnameMain = jtfPENAME.getText();
         pavailability = Integer.parseInt(jtfPAVIALIABLE.getText());
-        priceMain = Float.parseFloat(jtfPrice.getText());
-        ratingMain = Float.parseFloat(jtfProductRa.getText());
+        priceMain = jtfPrice.getText();
         SwingUtilities.updateComponentTreeUI(this);
     }
     private void configurarFrame(){
@@ -121,7 +115,11 @@ public class Painel extends JFrame{
         Enter.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
-                Adicionar_ButtonActionPerformed(e);
+                try {
+                    Adicionar_ButtonActionPerformed(e);
+                } catch (ParseException ex) {
+                    Logger.getLogger(Painel.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         Deletar.addActionListener(new ActionListener(){
@@ -133,9 +131,9 @@ public class Painel extends JFrame{
         this.add(Enter);
         this.add(Deletar);
     }
-    private void Adicionar_ButtonActionPerformed (java.awt.event.ActionEvent e){
+    private void Adicionar_ButtonActionPerformed (java.awt.event.ActionEvent e) throws ParseException{
         Dados();
-        arraylist.add(new DadosTabela_Lista(pidMain, pnameMain,pavailability,priceMain,ratingMain));
+        arraylist.add(new DadosTabela_Lista(pidMain, pnameMain,pavailability,priceMain));
         Tabela(arraylist);
     }
     private void Deletar_ButtonActionPerformed (java.awt.event.ActionEvent e){
