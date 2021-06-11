@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.util.*;
 import java.lang.*;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -15,30 +16,16 @@ public class Painel extends JFrame{
     private JPanel jpnPID, jpnPENAME, jpnPAVIALIABLE, jpnPrice, jpnProductRa, Display;
     private JLabel jlbPID, jlbPENAME, jlbPAVIALIABLE, jlbPrice, jlbProductRa;
     private JTextField jtfPID, jtfPENAME, jtfPAVIALIABLE, jtfPrice, jtfProductRa;
+    private JTable tabela;
+    private JScrollPane scrollPainel;
 
-    int[] pidMain, pavailability;
-    String[] pnameMain;
-    double[] priceMain;
-    float[] ratingMain;
+    int pidMain, pavailability;
+    String pnameMain;
+    Float priceMain;
+    float ratingMain;
     int size = 10;
-    ArrayList<Product>arraylist = new ArrayList<>();
+    ArrayList<DadosTabela_Lista>arraylist = new ArrayList<>();
     
-    class Product {
-        int pid;   
-        String pname;   
-        int pavailability;   
-        double pprice;   
-        float prating;  
-        Product(int pid, String pname, int pavailability, double pprice, float prating){   
-            //initializing the variables from main   
-            //function to the global variable of the class   
-            this.pid = pid;   
-            this.pname = pname;   
-            this.pavailability = pavailability;   
-            this.pprice = pprice;   
-            this.prating = prating;  
-        }
-    }
 
     public Painel() {
         this.configurarFrame();
@@ -112,13 +99,14 @@ public class Painel extends JFrame{
         this.jtfProductRa = new JTextField();
         this.jtfProductRa.setBounds(815,100,150,25);
         
-        //int pid = Integer.parseInt(jtfPID.getText());
-        //String pname = ;
-        //int pavi = Integer.parseInt(jtfPAVIALIABLE.getText());
-        //double price = Double.parseDouble(jtfPrice.getText());
-        //float rating = Float.parseFloat(jtfProductRa.getText());
-        
-        
+    }
+    private void Dados(){
+        pidMain = Integer.parseInt(jtfPID.getText());
+        pnameMain = jtfPENAME.getText();
+        pavailability = Integer.parseInt(jtfPAVIALIABLE.getText());
+        priceMain = Float.parseFloat(jtfPrice.getText());
+        ratingMain = Float.parseFloat(jtfProductRa.getText());
+        SwingUtilities.updateComponentTreeUI(this);
     }
     private void configurarFrame(){
         this.setTitle("JAnela com paineis");
@@ -127,45 +115,54 @@ public class Painel extends JFrame{
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         JButton Enter = new JButton("Adicionar");
-        
+        JButton Deletar = new JButton("Deletar");
         Enter.setBounds(50,600,100,50);
+        Deletar.setBounds(50,500,100,50);
         Enter.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
                 Adicionar_ButtonActionPerformed(e);
             }
         });
+        Deletar.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                Deletar_ButtonActionPerformed(e);
+            }
+        });
         this.add(Enter);
+        this.add(Deletar);
     }
     private void Adicionar_ButtonActionPerformed (java.awt.event.ActionEvent e){
-        arraylist.add(new Product(Integer.parseInt(jtfPID.getText()),jtfPENAME.getText(),Integer.parseInt(jtfPAVIALIABLE.getText()),Double.parseDouble(jtfPrice.getText()),Float.parseFloat(jtfProductRa.getText())));
+        Dados();
+        arraylist.add(new DadosTabela_Lista(pidMain, pnameMain,pavailability,priceMain,ratingMain));
         Tabela(arraylist);
-        
     }
-    
-    public void Tabela(ArrayList<Product> arraylist){
-        this.Display = new JPanel();
-        this.Display.setBounds(400,300,600,300);
-        
-        String[] header = {"Product ID", "Product Name","Product Quantidade", "Product Price", "Product Rating"};
-        String[][] value = new String[arraylist.size()/header.length][header.length];
-        
-        JTable table = new JTable(value, header);
-        this.Display.add(new JScrollPane(table));
-        this.add(this.Display);
-        SwingUtilities.updateComponentTreeUI(this);
+    private void Deletar_ButtonActionPerformed (java.awt.event.ActionEvent e){
+        Dados();
+        RemoverDaTabela(pidMain);
     }
-    public void displayElements(ArrayList<Product> arraylist){   
-        System.out.println("Product ID" + "   Product Name" + "     Product Availability" + "    Product Price" + "   Product Rating");   
-        System.out.println("-------------------------------------------------------------------------------------");      
-        //iteration over the ArrayList for accessing the elements  
-        for (int i = 0; i < size; i++)   
-        {   
-            //invoking the get() method of the ArrayList class to get the elements    
-            Product product = arraylist.get(i);   
-            //printing the elemnts to the console  
-            System.out.println(   product.pid+"    "+  "    "  +product.pname+"               "+"  "+product.pavailability+"                "+product.pprice+ "           "+String.format("%.01f", product.prating));   
-        }   
-    }   
-    
+    public void Tabela(ArrayList<DadosTabela_Lista> arraylist){
+        TabelaModel model = new TabelaModel(arraylist);
+        this.tabela = new JTable(model);
+        this.tabela.setBorder(BorderFactory.createEmptyBorder());
+        
+        this.scrollPainel = new JScrollPane(tabela);
+        this.scrollPainel.setBounds(400,200,400,400);
+        this.add(scrollPainel);
+    }
+    public void RemoverDaTabela(int alvo){
+        for(int i = 0; i<arraylist.size(); i++){
+            DadosTabela_Lista Rpid = arraylist.get(i);
+            if(Rpid.getPid() == alvo){
+                arraylist.remove(Rpid);
+                if(arraylist.isEmpty()){
+                    scrollPainel.setVisible(false);
+                    break;
+                    
+                }
+                else{break;}
+            }
+        }
+    }
 }

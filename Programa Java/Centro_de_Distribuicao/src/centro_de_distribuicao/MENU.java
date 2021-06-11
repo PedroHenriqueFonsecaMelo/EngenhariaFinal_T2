@@ -11,6 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFrame;
@@ -20,7 +21,7 @@ import javax.swing.JOptionPane;
  *
  * @author Admin
  */
-public class MENU extends javax.swing.JFrame {
+public class MENU extends javax.swing.JFrame implements Serializable  {
 
     
     int ln;
@@ -157,6 +158,7 @@ tfpswd.setText("");
     public static void main(String args[]) {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 
                new MENU().setVisible(true);
