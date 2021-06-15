@@ -87,7 +87,7 @@ public class TabelaModel extends AbstractTableModel {
                 produtoA.setPavailability((int) aValue);
                 break;
             case COLUNA_Data:
-                produtoA.setData((Date) aValue);
+                produtoA.setData(String.valueOf(aValue));
                 break;
         }
         //este método é que notifica a tabela que houve alteração de dados
