@@ -9,7 +9,10 @@ import java.lang.*;
 import java.text.ParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.RowFilter.ComparisonType;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -21,15 +24,18 @@ public class Painel extends JFrame{
     private JTextField jtfPID, jtfPENAME, jtfPAVIALIABLE, jtfPrice, jtfProductRa;
     private JTable tabela;
     private JScrollPane scrollPainel;
+    
 
     int pidMain, pavailability;
     String pnameMain;
     String priceMain;
     float ratingMain;
     int size = 10;
-    ArrayList<DadosTabela_Lista>arraylist = new ArrayList<>();
+    //private String[] colunas = {"PID", "Nome Produto", "Quantidade Produto","Data de Entrega"};
+    ArrayList<DadosTabela_Lista> arraylist = new ArrayList<>();
+    TabelaModel model = new TabelaModel(arraylist);
+    TableRowSorter<TabelaModel> rowSorter;
     
-
     public Painel() {
         this.configurarFrame();
         this.configurarPainelCliente();
@@ -37,13 +43,8 @@ public class Painel extends JFrame{
         this.add(this.jpnPENAME);
         this.add(this.jpnPAVIALIABLE);
         this.add(this.jpnPrice);
-        
-        //Painel LISTA = new Painel();
-        //LISTA.addElements(pid , pname, pavi, price, rating);
     }
-    private void addElements (int pid,String pname, int pavailability, double pprice,float prating){
-        
-    }
+   
     private void configurarPainelCliente(){
         this.jpnPID = new JPanel();
         this.jpnPID.setBounds(0,50,150,200);
@@ -88,7 +89,7 @@ public class Painel extends JFrame{
         this.jtfPAVIALIABLE = new JTextField();
         this.jtfPAVIALIABLE.setBounds(415,100,150,25);
         
-        this.jlbPrice = new JLabel("Data");
+        this.jlbPrice = new JLabel("Data Maxima de Entrega");
         this.jtfPrice = new JTextField();
         this.jtfPrice.setBounds(615,100,150,25);
         
@@ -108,10 +109,14 @@ public class Painel extends JFrame{
         this.setLayout(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        JButton Enter = new JButton("Adicionar");
+        JButton Enter = new JButton("Registrar");
         JButton Deletar = new JButton("Deletar");
+        JButton Pesquisar = new JButton("Pesquisar");
+       
         Enter.setBounds(50,600,100,50);
         Deletar.setBounds(50,500,100,50);
+        Pesquisar.setBounds(50,400,100,50);
+        
         Enter.addActionListener(new ActionListener(){
             @Override
             public void actionPerformed(ActionEvent e){
@@ -128,8 +133,15 @@ public class Painel extends JFrame{
                 Deletar_ButtonActionPerformed(e);
             }
         });
+        Pesquisar.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                Pesquisar_ButtonActionPerformed(e);
+            }
+        });
         this.add(Enter);
         this.add(Deletar);
+        this.add(Pesquisar);
     }
     private void Adicionar_ButtonActionPerformed (java.awt.event.ActionEvent e) throws ParseException{
         Dados();
@@ -140,15 +152,25 @@ public class Painel extends JFrame{
         Dados();
         RemoverDaTabela(pidMain);
     }
+    private void Pesquisar_ButtonActionPerformed (java.awt.event.ActionEvent e){
+        Dados();
+        PesquisarDaTabela(pidMain);
+    }
     public void Tabela(ArrayList<DadosTabela_Lista> arraylist){
-        TabelaModel model = new TabelaModel(arraylist);
+        
         this.tabela = new JTable(model);
         this.tabela.setBorder(BorderFactory.createEmptyBorder());
+        rowSorter = new TableRowSorter<>(model);
+        this.tabela.setRowSorter(rowSorter);
         
         this.scrollPainel = new JScrollPane(tabela);
-        this.scrollPainel.setBounds(400,200,400,400);
+        this.scrollPainel.setBounds(300,200,600,400);
         this.add(scrollPainel);
+        SwingUtilities.updateComponentTreeUI(this);
     }
+    
+    
+    
     public void RemoverDaTabela(int alvo){
         for(int i = 0; i<arraylist.size(); i++){
             DadosTabela_Lista Rpid = arraylist.get(i);
@@ -157,10 +179,19 @@ public class Painel extends JFrame{
                 if(arraylist.isEmpty()){
                     scrollPainel.setVisible(false);
                     break;
-                    
                 }
-                else{break;}
             }
         }
+        SwingUtilities.updateComponentTreeUI(this);
+    }
+    
+    public void PesquisarDaTabela(int alvo) {
+        
+        
+        this.rowSorter.setRowFilter(RowFilter.numberFilter(ComparisonType.EQUAL, alvo));
+        
+        this.tabela.setRowSorter(rowSorter);
+        this.scrollPainel.add(tabela);
+        
     }
 }
