@@ -7,6 +7,7 @@ package centro_de_distribuicao;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
 /**
@@ -18,7 +19,8 @@ public class DadosTabela_Lista {
        public String pname,dataEntrada;   
        public int pavailability;
        private Date data;
-       SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy"); 
+       private String data2;
+       DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
         public DadosTabela_Lista (int pid, String pname, int pavailability, String Data) throws ParseException{   
             //initializing the variables from main   
             //function to the global variable of the class   
@@ -26,7 +28,7 @@ public class DadosTabela_Lista {
             this.pname = pname;   
             this.pavailability = pavailability;   
             
-            this.data = formato.parse(Data);
+            this.data2 = Data;
             
         }
 
@@ -54,12 +56,12 @@ public class DadosTabela_Lista {
         this.pavailability = pavailability;
     }
 
-    public Date getData() {
-        return data;
+    public String getData() {
+        return data2;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setData(String data) {
+        this.data2 = data;
     }
     
     

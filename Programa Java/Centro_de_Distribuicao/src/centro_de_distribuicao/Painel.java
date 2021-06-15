@@ -34,7 +34,7 @@ public class Painel extends JFrame{
     //private String[] colunas = {"PID", "Nome Produto", "Quantidade Produto","Data de Entrega"};
     ArrayList<DadosTabela_Lista> arraylist = new ArrayList<>();
     TabelaModel model = new TabelaModel(arraylist);
-    TableRowSorter<TabelaModel> rowSorter;
+    
     
     public Painel() {
         this.configurarFrame();
@@ -160,17 +160,11 @@ public class Painel extends JFrame{
         
         this.tabela = new JTable(model);
         this.tabela.setBorder(BorderFactory.createEmptyBorder());
-        rowSorter = new TableRowSorter<>(model);
-        this.tabela.setRowSorter(rowSorter);
-        
         this.scrollPainel = new JScrollPane(tabela);
         this.scrollPainel.setBounds(300,200,600,400);
         this.add(scrollPainel);
         SwingUtilities.updateComponentTreeUI(this);
-    }
-    
-    
-    
+    } 
     public void RemoverDaTabela(int alvo){
         for(int i = 0; i<arraylist.size(); i++){
             DadosTabela_Lista Rpid = arraylist.get(i);
@@ -184,14 +178,20 @@ public class Painel extends JFrame{
         }
         SwingUtilities.updateComponentTreeUI(this);
     }
-    
     public void PesquisarDaTabela(int alvo) {
-        
-        
-        this.rowSorter.setRowFilter(RowFilter.numberFilter(ComparisonType.EQUAL, alvo));
-        
-        this.tabela.setRowSorter(rowSorter);
-        this.scrollPainel.add(tabela);
-        
+       for(int i = 0; i<arraylist.size(); i++){
+            DadosTabela_Lista Rpid = arraylist.get(i);
+            if(Rpid.getPid() == alvo){
+                JOptionPane.showMessageDialog(this, dados(arraylist, i));
+            }
+        }
+        SwingUtilities.updateComponentTreeUI(this);
+   }
+    private String dados (ArrayList<DadosTabela_Lista> arraylist, int i){
+        String tudo;
+        DadosTabela_Lista R = arraylist.get(i);
+        tudo = "Indice: " + R.getPid() + "\nNome: " + R.getPname() + "\nData Max de Entrega: " + R.getData() + "\nQuantidade: " + R.getPavailability();
+        return tudo;
     }
+         
 }
