@@ -33,10 +33,10 @@ public class Painel extends JFrame{
     String priceMain;
     float ratingMain;
     int size = 10;
+    int QuantidadeIN,QuantidadeOUT = 0;
     //private String[] colunas = {"PID", "Nome Produto", "Quantidade Produto","Data de Entrega"};
     ArrayList<DadosTabela_Lista> arraylist = new ArrayList<>();
     TabelaModel model = new TabelaModel(arraylist);
-    
     ArrayList<Protocolo> protc_desap_produtos = new ArrayList<>();
     public Painel() {
         this.configurarFrame();
@@ -115,14 +115,13 @@ public class Painel extends JFrame{
         JButton Deletar = new JButton("Deletar");
         JButton Pesquisar = new JButton("Pesquisar");
         JButton desaparecimento = new JButton("Desaparecimento de produto");
-       
         JButton Relatorio = new JButton("Relatorio Semanal");
        
-        Enter.setBounds(50,600,100,50);
-        Deletar.setBounds(50,500,100,50);
-        Pesquisar.setBounds(50,400,100,50);
-        Relatorio.setBounds(50,300,100,50);
-        desaparecimento.setBounds(50,200,150,50);
+        Enter.setBounds(25,250,300,50);
+        Deletar.setBounds(25,300,300,50);
+        Pesquisar.setBounds(25,350,300,50);
+        Relatorio.setBounds(25,450,300,50);
+        desaparecimento.setBounds(25,400,300,50);
         
         Enter.addActionListener(new ActionListener(){
             @Override
@@ -209,8 +208,9 @@ public class Painel extends JFrame{
         this.tabela = new JTable(model);
         this.tabela.setBorder(BorderFactory.createEmptyBorder());
         this.scrollPainel = new JScrollPane(tabela);
-        this.scrollPainel.setBounds(300,200,600,400);
+        this.scrollPainel.setBounds(400,200,600,400);
         this.add(scrollPainel);
+        this.QuantidadeIN = QuantidadeIN ++;
         SwingUtilities.updateComponentTreeUI(this);
     } 
     public void RemoverDaTabela(int alvo){
@@ -220,10 +220,12 @@ public class Painel extends JFrame{
                 arraylist.remove(Rpid);
                 if(arraylist.isEmpty()){
                     scrollPainel.setVisible(false);
+                    this.QuantidadeOUT = QuantidadeOUT ++;
                     break;
                 }
             }
         }
+        this.QuantidadeOUT = QuantidadeOUT ++;
         SwingUtilities.updateComponentTreeUI(this);
     }
     public void PesquisarDaTabela(int alvo) {
@@ -250,9 +252,10 @@ public class Painel extends JFrame{
         tudo = "Indice: " + R.getPid() + "\nNome: " + R.getPname() + "\nData Max de Entrega: " + R.getData() + "\nQuantidade: " + R.getPavailability();
         return tudo;
     }
-
     private void RelatorioDaTabela(ArrayList<DadosTabela_Lista> arraylist) {
-       new Relatorio(arraylist).setVisible(true);
+       Relatorio relatorio = new Relatorio(arraylist,QuantidadeIN ,QuantidadeOUT);
+       JOptionPane.showMessageDialog(this, relatorio);
+
     }
          
 }

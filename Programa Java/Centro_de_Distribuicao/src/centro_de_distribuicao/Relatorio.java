@@ -6,24 +6,46 @@
 package centro_de_distribuicao;
 
 import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author desen
  */
-public class Relatorio extends javax.swing.JPanel {
-
+public class Relatorio extends JPanel {
+    private JLabel RELATORIO;
     /**
      * Creates new form Relatorio
      * @param arraylist
      */
-    public Relatorio(ArrayList<DadosTabela_Lista> arraylist) {
-        initComponents();
-        addRowToJtable(arraylist);
-        
+    ArrayList<DadosTabela_Lista> arraylist = new ArrayList<>();
+    int QuantidadeIN, QuantidadeOUT;
+    
+    public Relatorio(ArrayList<DadosTabela_Lista> arraylist, int QuantidadeIN, int QuantidadeOUT) {
+       this.arraylist = arraylist;
+       this.QuantidadeIN = QuantidadeIN;
+       this.QuantidadeOUT = QuantidadeIN;
+       initComponents();
+       addRowToJtable(arraylist);
+       configurarFrame(QuantidadeIN,QuantidadeOUT);
     }
-
+    public void addRowToJtable(ArrayList<DadosTabela_Lista> arraylist) {
+        
+            
+        Object rowData[] = new Object[4];
+        for(int i = 0; i < arraylist.size(); i++){
+            rowData[0] = arraylist.get(i).pid;
+            rowData[1] = arraylist.get(i).pname;
+            rowData[2] = arraylist.get(i).pavailability;
+            rowData[3] = arraylist.get(i).data2;
+        
+        }
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.addRow(rowData);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,69 +55,74 @@ public class Relatorio extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+
+        jLabel2.setText("Relatorio Semanal");
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
+
             },
             new String [] {
-                "PID", "Nomde Produto", "Quantidade", "Data de MAX. Entrega"
+                "PID", "Nome do Produto", "Quantidade", "Data Max. Entrega"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowSelectionAllowed(false);
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel2.setText("Relatorio Semanal");
+        jLabel1.setName("RELATORIO_JLABEL"); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 425, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 425, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel2)
-                .addGap(25, 25, 25)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 
-    public void addRowToJtable(ArrayList<DadosTabela_Lista> arraylist) {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            
-        Object rowData[] = new Object[4];
-        for(int i = 0; i < arraylist.size(); i++){
-            rowData[0] = arraylist.get(i).pid;
-            rowData[1] = arraylist.get(i).pname;
-            rowData[2] = arraylist.get(i).pavailability;
-            rowData[3] = arraylist.get(i).dataEntrada;
-        
-        }
+    private void configurarFrame(int QuantidadeIN, int QuantidadeOUT) {
+        String relatorioTexto = ("Pacotes adicionados/a serem entregues :"+QuantidadeIN+" \nPacotes entregues ou removidos do Sistema: "+ QuantidadeOUT);
+        this.jLabel1.setText(relatorioTexto);
     }
+
+    
 }

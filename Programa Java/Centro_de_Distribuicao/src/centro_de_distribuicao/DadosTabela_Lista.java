@@ -19,7 +19,7 @@ public class DadosTabela_Lista {
        public String pname,dataEntrada;   
        public int pavailability;
        private Date data;
-       private String data2;
+       public String data2;
        DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy"); 
         public DadosTabela_Lista (int pid, String pname, int pavailability, String Data) throws ParseException{   
             //initializing the variables from main   
