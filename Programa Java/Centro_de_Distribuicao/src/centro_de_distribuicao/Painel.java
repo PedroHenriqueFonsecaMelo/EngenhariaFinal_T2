@@ -116,10 +116,13 @@ public class Painel extends JFrame{
         JButton Pesquisar = new JButton("Pesquisar");
         JButton desaparecimento = new JButton("Desaparecimento de produto");
        
-        Enter.setBounds(50,500,100,50);
-        Deletar.setBounds(50,400,100,50);
-        Pesquisar.setBounds(50,300,100,50);
-        desaparecimento.setBounds(50,600,150,50);
+        JButton Relatorio = new JButton("Relatorio Semanal");
+       
+        Enter.setBounds(50,600,100,50);
+        Deletar.setBounds(50,500,100,50);
+        Pesquisar.setBounds(50,400,100,50);
+        Relatorio.setBounds(50,300,100,50);
+        desaparecimento.setBounds(50,200,150,50);
         
         Enter.addActionListener(new ActionListener(){
             @Override
@@ -149,10 +152,17 @@ public class Painel extends JFrame{
                 protocol_desaparecimentoActionPerformed(e);
             }
         });
+        Relatorio.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                Relatorio_ButtonActionPerformed(e);
+            }
+        });
         this.add(Enter);
         this.add(Deletar);
         this.add(Pesquisar);
         this.add(desaparecimento);
+        this.add(Relatorio);
     }
     private void protocol_desaparecimentoActionPerformed(ActionEvent e){
         boolean valido = false;
@@ -174,6 +184,8 @@ public class Painel extends JFrame{
         if(registrar){
             protc_desap_produtos.add(novo);
         }
+        
+
     }
     private void Adicionar_ButtonActionPerformed (java.awt.event.ActionEvent e) throws ParseException{
         Dados();
@@ -187,6 +199,10 @@ public class Painel extends JFrame{
     private void Pesquisar_ButtonActionPerformed (java.awt.event.ActionEvent e){
         Dados();
         PesquisarDaTabela(pidMain);
+    }
+    private void Relatorio_ButtonActionPerformed (java.awt.event.ActionEvent e){
+        Dados();
+        RelatorioDaTabela(arraylist);
     }
     public void Tabela(ArrayList<DadosTabela_Lista> arraylist){
         
@@ -233,6 +249,10 @@ public class Painel extends JFrame{
         DadosTabela_Lista R = arraylist.get(i);
         tudo = "Indice: " + R.getPid() + "\nNome: " + R.getPname() + "\nData Max de Entrega: " + R.getData() + "\nQuantidade: " + R.getPavailability();
         return tudo;
+    }
+
+    private void RelatorioDaTabela(ArrayList<DadosTabela_Lista> arraylist) {
+       new Relatorio(arraylist).setVisible(true);
     }
          
 }
