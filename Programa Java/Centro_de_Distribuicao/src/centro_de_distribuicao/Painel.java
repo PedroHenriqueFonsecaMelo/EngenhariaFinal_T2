@@ -14,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import administrativo.*;
+
 /**
  *
  * @author BLSoft
@@ -35,7 +37,7 @@ public class Painel extends JFrame{
     ArrayList<DadosTabela_Lista> arraylist = new ArrayList<>();
     TabelaModel model = new TabelaModel(arraylist);
     
-    
+    ArrayList<Protocolo> protc_desap_produtos = new ArrayList<>();
     public Painel() {
         this.configurarFrame();
         this.configurarPainelCliente();
@@ -112,10 +114,12 @@ public class Painel extends JFrame{
         JButton Enter = new JButton("Registrar");
         JButton Deletar = new JButton("Deletar");
         JButton Pesquisar = new JButton("Pesquisar");
+        JButton desaparecimento = new JButton("Desaparecimento de produto");
        
-        Enter.setBounds(50,600,100,50);
-        Deletar.setBounds(50,500,100,50);
-        Pesquisar.setBounds(50,400,100,50);
+        Enter.setBounds(50,500,100,50);
+        Deletar.setBounds(50,400,100,50);
+        Pesquisar.setBounds(50,300,100,50);
+        desaparecimento.setBounds(50,600,150,50);
         
         Enter.addActionListener(new ActionListener(){
             @Override
@@ -139,9 +143,37 @@ public class Painel extends JFrame{
                 Pesquisar_ButtonActionPerformed(e);
             }
         });
+        desaparecimento.addActionListener(new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e){
+                protocol_desaparecimentoActionPerformed(e);
+            }
+        });
         this.add(Enter);
         this.add(Deletar);
         this.add(Pesquisar);
+        this.add(desaparecimento);
+    }
+    private void protocol_desaparecimentoActionPerformed(ActionEvent e){
+        boolean valido = false;
+        Protocolo novo = null;
+        boolean registrar = true;
+        while(!valido){
+            novo = Protocolo_Desaparecimento.novoProtocolo();
+            if(produtoExiste(novo.getId_produto())){
+                valido = true;
+            }
+            else{
+                int opcao = JOptionPane.showConfirmDialog (null, "Produto não encontrado no sistema, deseja tentar novamente?","Aviso",JOptionPane.YES_NO_OPTION);
+                if(opcao == JOptionPane.NO_OPTION){
+                    valido = true;
+                    registrar = false;
+                }
+            }
+        }
+        if(registrar){
+            protc_desap_produtos.add(novo);
+        }
     }
     private void Adicionar_ButtonActionPerformed (java.awt.event.ActionEvent e) throws ParseException{
         Dados();
@@ -187,6 +219,15 @@ public class Painel extends JFrame{
         }
         SwingUtilities.updateComponentTreeUI(this);
    }
+    public boolean produtoExiste(int id){
+        for(int i = 0; i < arraylist.size(); i++){
+            DadosTabela_Lista prod = arraylist.get(i);
+            if(prod.getPid() == id){
+                return true;
+            }
+        }
+        return false;
+    }
     private String dados (ArrayList<DadosTabela_Lista> arraylist, int i){
         String tudo;
         DadosTabela_Lista R = arraylist.get(i);
