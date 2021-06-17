@@ -1,6 +1,7 @@
 # EngenhariaFinal_T2
 Integrantes:
 Estevam de Freitas Junior	RA: 1840482012010
+Pedro Henrique Fonseca Melo RA: 1840482012024
 
 
 #Descrição do projeto
