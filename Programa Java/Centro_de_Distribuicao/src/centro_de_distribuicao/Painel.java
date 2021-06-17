@@ -253,8 +253,13 @@ public class Painel extends JFrame{
         return tudo;
     }
     private void RelatorioDaTabela(ArrayList<DadosTabela_Lista> arraylist) {
-       Relatorio relatorio = new Relatorio(arraylist,QuantidadeIN ,QuantidadeOUT);
-       JOptionPane.showMessageDialog(this, relatorio);
+       if(arraylist.isEmpty()){
+           JOptionPane.showMessageDialog(this, "Nao ha dados a serem relatados");
+       }
+       else{
+        Relatorio relatorio = new Relatorio(arraylist,QuantidadeIN ,QuantidadeOUT);
+        JOptionPane.showMessageDialog(this, relatorio);
+       }
 
     }
          
