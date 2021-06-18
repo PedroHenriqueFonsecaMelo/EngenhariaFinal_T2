@@ -16,10 +16,7 @@ import javax.swing.table.TableRowSorter;
 
 import administrativo.*;
 
-/**
- *
- * @author BLSoft
- */
+
 public class Painel extends JFrame{
     private JPanel jpnPID, jpnPENAME, jpnPAVIALIABLE, jpnPrice, jpnProductRa, Display;
     private JLabel jlbPID, jlbPENAME, jlbPAVIALIABLE, jlbPrice, jlbProductRa;
