@@ -26,6 +26,7 @@ public class Painel extends JFrame{
     private JTextField jtfPID, jtfPENAME, jtfPAVIALIABLE, jtfPrice, jtfProductRa;
     private JTable tabela;
     private JScrollPane scrollPainel;
+    private boolean Verficacao = false;
     
 
     int pidMain, pavailability;
@@ -99,10 +100,18 @@ public class Painel extends JFrame{
         
     }
     private void Dados(){
-        pidMain = Integer.parseInt(jtfPID.getText());
-        pnameMain = jtfPENAME.getText();
-        pavailability = Integer.parseInt(jtfPAVIALIABLE.getText());
-        priceMain = jtfPrice.getText();
+        if (jtfPID.getText().equals("") | jtfPENAME.getText().equals("") | jtfPAVIALIABLE.getText().equals("") | jtfPrice.getText().equals("") ){
+            
+            JOptionPane.showMessageDialog(this, "Atencao: verifique se os dados foram digitados corretamente");
+        }
+        else{
+            pidMain = Integer.parseInt(jtfPID.getText());
+            pnameMain = jtfPENAME.getText();
+            pavailability = Integer.parseInt(jtfPAVIALIABLE.getText());
+            priceMain = jtfPrice.getText();
+            Verficacao = true;
+        }
+        
         SwingUtilities.updateComponentTreeUI(this);
     }
     private void configurarFrame(){
@@ -178,6 +187,7 @@ public class Painel extends JFrame{
                     valido = true;
                     registrar = false;
                 }
+            
             }
         }
         if(registrar){
@@ -188,8 +198,10 @@ public class Painel extends JFrame{
     }
     private void Adicionar_ButtonActionPerformed (java.awt.event.ActionEvent e) throws ParseException{
         Dados();
-        arraylist.add(new DadosTabela_Lista(pidMain, pnameMain,pavailability,priceMain));
-        Tabela(arraylist);
+        if(Verficacao){
+            arraylist.add(new DadosTabela_Lista(pidMain, pnameMain,pavailability,priceMain));
+            Tabela(arraylist);
+        }
     }
     private void Deletar_ButtonActionPerformed (java.awt.event.ActionEvent e){
         Dados();
